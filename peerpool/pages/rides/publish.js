@@ -1,11 +1,10 @@
-import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from '../../constants';
 import { newRide, getProviderorSigner, connectWallet } from '../../utils/functions';
 import Web3Modal from "web3modal";
 import { Contract, ethers } from "ethers";
-import styles from "../../styles/Home.module.css";
 import detectEthereumProvider from '@metamask/detect-provider';
+import Navbar_custom from '../navbar_custom';
 
 
 
@@ -28,9 +27,9 @@ export default function Publish() {
         await provider.send('eth_requestAccounts', []);
 
         const { chainId } = await provider.getNetwork();
-        if (chainId !== 5) {
-            window.alert("Change the network to Goerli");
-            throw new Error("Change the network to Goerli");
+        if (chainId !== 11155111) {
+            window.alert("Change the network to Sepolia");
+            throw new Error("Change the network to Sepolia");
         }
 
         if (needSigner) {
@@ -120,52 +119,55 @@ export default function Publish() {
             if(address == ""){
                 connectWallet()
             }
-                return (
-                <div className="container">
-                    <div className="title">Publish A Ride</div>
-                    <div className="content">
-                    <header className="header_rides">Address: {address}</header>
-
-                        <form action="#">
-                            <div className="user-details">
-                                <div className="input-box">
-                                    <span className="details">Origin</span>
-                                    <input type="text" placeholder="Enter your Origin" required onChange={(e) => {
-                                        setOrigin(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Destination</span>
-                                    <input type="text" placeholder="Enter your Destination" required onChange={(e) => {
-                                        setDestination(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Departure Time</span>
-                                    <input type="text" placeholder="Enter time in 24hr format" required onChange={(e) => {
-                                        setDepartureTime(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Seats Available</span>
-                                    <input type="number" placeholder="Choose Seats Available" required onChange={(e) => {
-                                        setSeats(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Fare</span>
-                                    <input type="text" min="0" step="any" placeholder="Enter your Number" required onChange={(e) => {
-                                        setFare(e.target.value || "")
-                                    }}></input>
-                                </div>
-
+            return (
+                <div>
+                    <Navbar_custom/>
+                    <section className="bg-gray-50 dark:bg-gray-900">
+                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                        Publish a Ride
+                                    </h1>
+                                <form>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Origin</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter your Origin" required onChange={(e) => {
+                                            setOrigin(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Destination</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter your Destination" required onChange={(e) => {
+                                            setDestination(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departure Time</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter time in 24hr format" required onChange={(e) => {
+                                            setDepartureTime(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats Available</label>
+                                        <input type="number" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Choose Seats Available" required onChange={(e) => {
+                                            setSeats(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fare</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' min="0" step="any" placeholder="Enter your Number" required onChange={(e) => {
+                                            setFare(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="button">
+                                        <input type="submit" value="Register" onClick={publishRide}></input>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div className="button">
-                                <input type="submit" value="Register" onClick={publishRide}></input>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        </div>
+                    </section>
                 </div>
             )
         }

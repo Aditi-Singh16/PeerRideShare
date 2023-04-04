@@ -1,10 +1,9 @@
-import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import Web3Modal from "web3modal";
 import {  Contract,ethers } from "ethers";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from '../../constants';
-import styles from "../../styles/Home.module.css";
 import detectEthereumProvider from '@metamask/detect-provider';
+import NavbarCustom from '../navbar_custom';
 
 export default function Book() {
     const [origin, setOrigin] = useState("");
@@ -26,9 +25,9 @@ export default function Book() {
         await provider.send('eth_requestAccounts', []);
 
         const { chainId } = await provider.getNetwork();
-        if (chainId !== 5) {
-            window.alert("Change the network to Goerli");
-            throw new Error("Change the network to Goerli");
+        if (chainId !== 11155111) {
+            window.alert("Change the network to Sepolia");
+            throw new Error("Change the network to Sepolia");
         }
 
         if (needSigner) {
@@ -105,67 +104,75 @@ export default function Book() {
         }
         else {
             return (
-                <div className="container">
-                    <div className="title">Book A Ride</div>
-                    <div className="content">
-                        <form action="#">
-                            <div className="user-details">
-                                <div className="input-box">
-                                    <span className="details">Origin</span>
-                                    <input type="text" placeholder="Enter your Origin" required onChange={(e) => {
-                                        setOrigin(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Destination</span>
-                                    <input type="text" placeholder="Enter your Destination" required onChange={(e) => {
-                                        setDestination(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Departure Time</span>
-                                    <input type="text" placeholder="Enter time in 24hr format" required onChange={(e) => {
-                                        setDepartureTime(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Seats Available</span>
-                                    <input type="number" placeholder="Choose Seats Available" required onChange={(e) => {
-                                        setSeats(e.target.value || "")
-                                    }}></input>
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Fare</span>
-                                    <input type="text" min="0" step="any" placeholder="Enter your Number" required onChange={(e) => {
-                                        setFare(e.target.value || "")
-                                    }}></input>
-                                </div>
-
+                <div>
+                    <NavbarCustom/>
+                    <section className="bg-gray-50 dark:bg-gray-900">
+                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                        Book a Ride
+                                    </h1>
+                                <form>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Origin</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter your Origin" required onChange={(e) => {
+                                            setOrigin(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Destination</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter your Destination" required onChange={(e) => {
+                                            setDestination(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departure Time</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Enter time in 24hr format" required onChange={(e) => {
+                                            setDepartureTime(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats Available</label>
+                                        <input type="number" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Choose Seats Available" required onChange={(e) => {
+                                            setSeats(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fare</label>
+                                        <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' min="0" step="any" placeholder="Enter your Number" required onChange={(e) => {
+                                            setFare(e.target.value || "")
+                                        }}></input>
+                                    </div>
+                                    <div className="button">
+                                        <input type="submit" onClick={book_} value="Search"></input>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div className="button">
-                                <input type="submit" onClick={book_} value="Search"></input>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <div>
+                </section>
+                <section className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <h1>Matching Rides</h1>
                     {ridematch.length > 0 ? (
                         ridematch.map((ride) => (
-                        <div>
-                            <div className={styles.card}>
-                            <h2>{ride.origin} to {ride.destination}</h2>
-                            <p>Departure Time: {ride.departuretime}</p>
-                            <p>Seats Available: {ride.seats}</p>
-                            <button className={styles.btn}>Book Ride</button>
+                            <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <div>
+                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{ride.origin} to {ride.destination}</h5>
+                                </div>
+                                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                Departure Time: {ride.departuretime}</p>
+                                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Seats Available: {ride.seats}</p>
+                                <button className={styles.btn}>Book Ride</button>
                             </div>
-                        </div>
                         ))
                     ) : (
                         <p>No matching ride found.</p>
                     )}
-                    </div>
+
+</section>
                 </div>
+                
             )
         }
     }
