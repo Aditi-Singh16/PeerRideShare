@@ -101,15 +101,3 @@ git commit -m "your message"
 
 ### Contract Address: 0x4d30FE8d7847E6cC8B905518f32b40274f168Af7 (will be updated)
 
-<hr>
-
-### For Further Communications 
-* Join Our Discord Server: https://discord.gg/QHQ96vMF 
-* Email: 500096625@stu.upes.ac.in
-* Ping on discord: trev#4443
-
-
-
-<hr>
-
-**_NOTE:_** Metamask and other wallets keep on changing the protocols to work with the blockchain to ensure safety. "Deprecated" error might appear in future. Check official Metamask documentation for updates.
